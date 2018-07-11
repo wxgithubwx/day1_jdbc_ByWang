@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="wx.mapper.BookMapper">
+    <!--??id??-->
+    <select id="findBookById" parameterType="int"
+     resultType="wx.Bean.Book">
+        select * from book where id=#{id}
+    </select>
+    <!--??name????-->
+    <select id="findBooksByName" parameterType="String"
+            resultType="wx.Bean.Book">
+        select * from book where name like '%${value}%'
+    </select>
+    <!--?? ????-->
+    <!--????1-->
+    <insert id="insertBook" parameterType="wx.Bean.Book" >
+       <selectKey keyProperty="id" order="AFTER" resultType="int">
+           select LAST_INSERT_ID()
+       </selectKey>
+        INSERT INTO `book`.`book` VALUES (null , #{name}, #{autho}, #{price});
+    </insert>
+
+    <!--????2-->
+    <insert id="insertBook2" useGeneratedKeys="true" keyProperty="id"
+            parameterType="wx.Bean.Book">
+    INSERT INTO `book`.`book` VALUES (null , #{name}, #{autho}, #{price});
+    </insert>
+
+    <!--??-->
+    <delete id="deleteBook" parameterType="int">
+    delete from book where id = #{id}
+    </delete>
+    <!--??-->
+    <update id="updateBook" parameterType="wx.Bean.Book">
+        UPDATE `book`.`book` SET `name`=#{name}, `autho`=#{autho}, `price`=#{price} WHERE (`id`=#{id});
+    </update>
+</mapper>

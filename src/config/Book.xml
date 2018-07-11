@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- namespace：命名空间【重要】-->
+<mapper namespace="book">
+    <select id="findBookById" parameterType="int"
+            resultType="wx.Bean.Book">
+    SELECT * FROM book WHERE id = #{id}
+    </select>
+
+    <select id="findBookByName" parameterType="String"
+            resultType="wx.Bean.Book">
+    SELECT * FROM book WHERE name like '%${value}%'
+    </select>
+    <!--新增图书-->
+    <select id="insertBook" parameterType="wx.Bean.Book">
+    INSERT INTO `book`.`book` VALUES ( #{id},#{name}, #{autho}, #{price});
+    </select>
+</mapper>
